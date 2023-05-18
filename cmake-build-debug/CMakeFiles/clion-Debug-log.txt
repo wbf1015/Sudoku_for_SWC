@@ -1,0 +1,6 @@
+"D:\CLion 2022.3.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/CLion 2022.3.1/bin/ninja/win/ninja.exe" -G Ninja -S G:\code\Sudoku_for_SWC -B G:\code\Sudoku_for_SWC\cmake-build-debug
+CMake Error at CMakeLists.txt:2 (project):
+  project PROJECT called with incorrect number of arguments
+
+
+-- Configuring incomplete, errors occurred!
