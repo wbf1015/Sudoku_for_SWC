@@ -1,5 +1,5 @@
 //
-// Created by Îº²®·± on 2023/5/17.
+// Created by Îºï¿½ï¿½ï¿½ï¿½ on 2023/5/17.
 //
 #include <bits/stdc++.h>
 #include "Solution.cpp"
@@ -16,6 +16,7 @@ public:
     void fillData(vector<vector<char>> data_char);
     bool checkCol(int c);
     void printSudoku();
+    bool gen_Sudoku_with_n_empty(int n, bool is_unique);
 };
 
 void Sudoku::fillData(vector<vector<char>> data_char) {
@@ -45,7 +46,7 @@ vector<vector<char>> Sudoku::trans_data_2_char() {
 
 
 
-//´òÓ¡Êı¶ÀÄÚÈİ
+//ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void Sudoku::printSudoku() {
     cout << "+-------+-------+-------+" << endl;
     for (int i = 0; i < 9; i++) {
@@ -62,9 +63,9 @@ void Sudoku::printSudoku() {
 }
 
 
-//ÓÃÓÚÅĞ¶ÏÒ»¸ö3X3µÄ¾ØÕóÄÚÊÇ·ñÓĞÖØ¸´ÔªËØ£¬Ìá³öÒ»¸öº¯ÊıÖ÷ÒªÊÇ²»ÏëÈÃcheckMatrixÌ«Èß³¤
+//ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½Ò»ï¿½ï¿½3X3ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½Ôªï¿½Ø£ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½checkMatrixÌ«ï¿½ß³ï¿½
 bool Sudoku::checkMatrixUtil(int row_start, int row_end, int col_start, int col_end) {
-    set<int> record;//ÓÃÓÚ¼ÇÂ¼ÒÑ¾­´æÁËÄÄĞ©Êı×Ö
+    set<int> record;//ï¿½ï¿½ï¿½Ú¼ï¿½Â¼ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ©ï¿½ï¿½ï¿½ï¿½
     for(int i=row_start;i<=row_end;i++){
         for(int j=col_start;j<=col_end;j++){
             if(data[i][j]==0){
@@ -78,7 +79,7 @@ bool Sudoku::checkMatrixUtil(int row_start, int row_end, int col_start, int col_
     }
     return true;
 }
-// ÅĞ¶ÏÒ»¸ö3X3µÄĞ¡¾ØÕóÄÚÊÇ·ñÓĞÖØ¸´ÔªËØ
+// ï¿½Ğ¶ï¿½Ò»ï¿½ï¿½3X3ï¿½ï¿½Ğ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½Ôªï¿½ï¿½
 bool Sudoku::checkMatrix(char m) {
     switch(m){
         case 'a':
@@ -103,9 +104,9 @@ bool Sudoku::checkMatrix(char m) {
             throw "ERROR AT CHECKMATRIX";
     }
 }
-// ÅĞ¶ÏÒ»ÁĞÄÚÊÇ·ñÓĞÖØ¸´ÔªËØ
+// ï¿½Ğ¶ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½Ôªï¿½ï¿½
 bool Sudoku::checkCol(int c) {
-    set<int> record;//ÓÃÓÚ¼ÇÂ¼ÒÑ¾­´æÁËÄÄĞ©Êı×Ö
+    set<int> record;//ï¿½ï¿½ï¿½Ú¼ï¿½Â¼ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ©ï¿½ï¿½ï¿½ï¿½
     for(int i=0;i<=8;i++){
         if(data[i][c]==0) continue;
         if(record.count(data[i][c])==1){
@@ -116,7 +117,7 @@ bool Sudoku::checkCol(int c) {
     return true;
 }
 
-//ÅĞ¶ÏÒ»ĞĞÄÚÊÇ·ñÓĞÖØ¸´ÔªËØ
+//ï¿½Ğ¶ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½Ôªï¿½ï¿½
 bool Sudoku::checkRow(int r) {
     set<int> record;
     for(int i=0;i<=8;i++){
@@ -127,7 +128,7 @@ bool Sudoku::checkRow(int r) {
         record.insert(data[r][i]);
     }
 }
-// Éú³ÉÊı×é
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 bool Sudoku::generateSudoku() {
      srand((unsigned)time(NULL));
      int candidate[9] = {1,2,3,4,5,6,7,8,9};
@@ -171,8 +172,122 @@ bool Sudoku::generateSudoku() {
 }
 
 
+// åœ¨0-81èŒƒå›´å†…éšæœºç”Ÿæˆnä¸ªä¸åŒçš„æ•°ï¼Œä»¥æ­¤å†³å®šå¯¹å“ªäº›ä½ç½®æŒ–ç©º
+bool gen_random_num(int n, vector<int>& res)
+{
+    srand((unsigned)time(NULL));
+    const int total_num = 81;
+    if(n >= total_num){
+        cout<<"wrong input"<<endl;
+        return false;
+    }
+    // æ ‡è®°æ˜¯å¦ç”Ÿæˆ
+    int book[total_num];
+    std::memset(book,0,sizeof(book));
+    // è¡¨ç¤ºå·²ç»ç”Ÿæˆå¤šå°‘ä¸ªéšæœºæ•°
+    int cnt = 0;
+    while(cnt<n){
+        // éšæœºç”Ÿæˆ0-80çš„ä¸€ä¸ªæ•°
+        int rand_num =  rand() % total_num;
+        // å¦‚æœæ²¡ç”Ÿæˆè¿‡è¿™ä¸ªæ•°
+        if(book[rand_num] == 0){
+            book[rand_num] = 1;
+            res.push_back(rand_num);
+            cnt += 1;
+        }
+    }
+    return true;
+}
+
+
+// æ£€æŸ¥å”¯ä¸€è§£çš„æ¡ä»¶(å¿…è¦æ¡ä»¶)
+bool check_unique(int data[9][9]){
+    //åˆ¤æ–­æ˜¯å¦å­˜åœ¨è¿ç»­ä¸‰è¡Œä¸ºç©º
+    int continuous_row_empty_cnt = 0;
+    for(int i=0;i<9;i++){
+        bool cur_row_all_zero = true;
+        for(int j=0;j<9;j++){
+            if(data[i][j]!=0){
+                continuous_row_empty_cnt=0;
+                cur_row_all_zero = false;
+                break;
+            }
+        }
+        if(cur_row_all_zero){
+            continuous_row_empty_cnt += 1;
+        }
+    }
+    if(continuous_row_empty_cnt>=3)return false;
+
+    //åˆ¤æ–­æ˜¯å¦å­˜åœ¨è¿ç»­ä¸‰åˆ—ä¸ºç©º
+    int continuous_col_empty_cnt = 0;
+    for(int i=0;i<9;i++){
+        bool cur_col_all_zero = true;
+        for(int j=0;j<9;j++){
+            if(data[j][i]!=0){
+                continuous_col_empty_cnt=0;
+                cur_col_all_zero = false;
+                break;
+            }
+        }
+        if(cur_col_all_zero){
+            continuous_col_empty_cnt += 1;
+        }
+    }
+    if(continuous_col_empty_cnt>=3)return false;
+
+    //åˆ¤æ–­æç¤ºæ•°å­—æ˜¯å¦å°äºç­‰äº7ä¸ª
+    int has_num[9];
+    std::memset(has_num,0,sizeof(has_num));
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            if(has_num[data[i][j]] == 0){
+                has_num[data[i][j]] = 1;
+            }
+        }
+    }
+    int exist_num_cnt = 0;
+    for(int i=0;i<9;i++){
+        if(has_num[i] == 1){
+            exist_num_cnt ++;
+        }
+    }
+    if(exist_num_cnt <= 7)return false;
+
+    return true;
+}
+
+// å¯¹ä¸€ä¸ªå®Œæ•´çš„æ•°ç‹¬è¿›è¡ŒéšæœºæŒ–ç©ºï¼ŒæŒ–ç©ºä¸ªæ•°ä¸ºnï¼Œis_uniqueä»£è¡¨æ˜¯å¦è¦æ±‚å”¯ä¸€è§£
+bool Sudoku::gen_Sudoku_with_n_empty(int n, bool is_unique){
+    int known_num = 81 - n;
+    if(is_unique && (known_num<17)){
+        cout<<"wrong input, n too large!"<<endl;
+        return false;
+    }
+    //å¾ªç¯ï¼Œç›´åˆ°æ»¡è¶³å­˜åœ¨å”¯ä¸€è§£æ¡ä»¶ä½ç½®
+    while(true){
+        vector<int> rand_empty;
+        if(!gen_random_num(n,rand_empty))return false;
+        // å°†æ•°ç‹¬çš„éšæœºnä¸ªä½ç½®æŒ–ç©ºï¼Œèµ‹å€¼ä¸º0
+        for(int i=0; i<rand_empty.size(); i++){
+            int row_idx = rand_empty[i] / 9;
+            int col_idx = rand_empty[i] % 9;
+            this->data[row_idx][col_idx] = 0;
+        }
+        // å¦‚æœä¸éœ€è¦æ˜¯å”¯ä¸€è§£ï¼Œç›´æ¥è¿”å›å³å¯
+        if(!is_unique)return true;
+        // å¦‚æœè¦æ±‚å”¯ä¸€è§£ï¼Œéœ€è¦è¿›è¡Œæ£€æŸ¥ï¼Œç›´åˆ°æ»¡è¶³ä¸ºæ­¢
+        else{
+            if(check_unique(this->data))return true;
+        }
+    }
+
+}
+
 int main(){
     Sudoku s;
     s.generateSudoku();
+    s.printSudoku();
+    s.gen_Sudoku_with_n_empty(28, true);
     s.printSudoku();
 }
