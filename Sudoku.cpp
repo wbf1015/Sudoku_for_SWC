@@ -2,6 +2,7 @@
 // Created by κ���� on 2023/5/17.
 //
 #include <bits/stdc++.h>
+#include <unistd.h>
 #include "Solution.cpp"
 using namespace std;
 class Sudoku{
@@ -285,9 +286,35 @@ bool Sudoku::gen_Sudoku_with_n_empty(int n, bool is_unique){
 }
 
 int main(){
-    Sudoku s;
-    s.generateSudoku();
-    s.printSudoku();
-    s.gen_Sudoku_with_n_empty(28, true);
-    s.printSudoku();
+    //    Sudoku s;
+//    s.generateSudoku();
+//    s.printSudoku();
+//    s.gen_Sudoku_with_n_empty(28, true);
+//    s.printSudoku();
+
+//    for(int i=0;i<argc;i++)
+//        cout<<"Argument "<<i<<" is "<<argv[i]<<endl;
+//    return 0;
+
+    const char *optstring = "c:s:n:m:r:u"; // 设置短参数类型及是否需要参数
+    int opt;
+//    while ((opt = getopt(argc, argv, optstring)) != -1) {
+//        printf("opt = %c\n", opt);  // 命令参数，亦即 -a -b -c -d
+//        printf("optarg = %s\n", optarg); // 参数内容
+//        printf("optind = %d\n", optind); // 下一个被处理的下标值
+//        printf("argv[optind - 1] = %s\n\n",  argv[optind - 1]); // 参数内容
+//    }
+
+    // 循环读取命令行的参数和参数内容
+    while((opt = getopt(argc, argv, optstring)) != -1){
+        // 如果参数为-c 5，则生成5个终局
+        if(opt == 'c'){
+            int cur_arg = std::atoi(optarg);
+            for(int i=0;i<cur_arg;i++){
+                Sudoku s;
+                s.generateSudoku();
+                s.printSudoku();
+            }
+        }
+    }
 }
