@@ -1,0 +1,7 @@
+C:/Users/yukhu/Desktop/结对/Sudoku_for_SWC/cmake-build-debug/CMakeFiles/Sudoku_for_SWC.dir
+C:/Users/yukhu/Desktop/结对/Sudoku_for_SWC/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/yukhu/Desktop/结对/Sudoku_for_SWC/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/yukhu/Desktop/结对/Sudoku_for_SWC/cmake-build-debug/googletest/CMakeFiles/gtest.dir
+C:/Users/yukhu/Desktop/结对/Sudoku_for_SWC/cmake-build-debug/googletest/CMakeFiles/gtest_main.dir
+C:/Users/yukhu/Desktop/结对/Sudoku_for_SWC/cmake-build-debug/googletest/CMakeFiles/edit_cache.dir
+C:/Users/yukhu/Desktop/结对/Sudoku_for_SWC/cmake-build-debug/googletest/CMakeFiles/rebuild_cache.dir

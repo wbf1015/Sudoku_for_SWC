@@ -1,0 +1,2 @@
+"C:\PROGRA~1\JetBrains\CLion 2022.3.2\bin\mingw\bin\ar.exe" qc ..\lib\libgtestd.a "CMakeFiles/gtest.dir/src/gtest-all.cc.obj"
+"C:\PROGRA~1\JetBrains\CLion 2022.3.2\bin\mingw\bin\ranlib.exe" ..\lib\libgtestd.a

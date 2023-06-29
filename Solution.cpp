@@ -1,7 +1,9 @@
 //
 // Created by Îº²®·± on 2023/5/19.
 //
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
+#include<vector>
+#include<bitset>
 using namespace std;
 class Solution {
 public:

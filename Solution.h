@@ -1,0 +1,8 @@
+//
+// Created by HYX on 2023-06-29.
+//
+
+#ifndef SUDOKU_FOR_SWC_SOLUTION_H
+#define SUDOKU_FOR_SWC_SOLUTION_H
+
+#endif //SUDOKU_FOR_SWC_SOLUTION_H

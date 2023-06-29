@@ -1,24 +1,19 @@
 //
 // Created by κ���� on 2023/5/17.
 //
-#include <bits/stdc++.h>
-#include <unistd.h>
-#include "Solution.cpp"
-using namespace std;
-class Sudoku{
-private:
-    int data[9][9]={0};
-public:
-    bool generateSudoku();
-    bool checkMatrix(char m);
-    bool checkMatrixUtil(int row_start,int row_end,int col_start,int col_end);
-    bool checkRow(int r);
-    vector<vector<char>> trans_data_2_char();
-    void fillData(vector<vector<char>> data_char);
-    bool checkCol(int c);
-    void printSudoku();
-    bool gen_Sudoku_with_n_empty(int n, bool is_unique);
-};
+//#include <bits/stdc++.h>
+
+#include "gtest/gtest.h"
+
+#define TEST_SUDOKU
+
+
+
+
+#include "Sudoku.h"
+
+
+
 
 void Sudoku::fillData(vector<vector<char>> data_char) {
     for(int i=0;i<data_char.size();i++){
@@ -174,7 +169,7 @@ bool Sudoku::generateSudoku() {
 
 
 // 在0-81范围内随机生成n个不同的数，以此决定对哪些位置挖空
-bool gen_random_num(int n, vector<int>& res)
+bool Sudoku::gen_random_num(int n, vector<int>& res)
 {
     srand((unsigned)time(NULL));
     const int total_num = 81;
@@ -202,7 +197,7 @@ bool gen_random_num(int n, vector<int>& res)
 
 
 // 检查唯一解的条件(必要条件)
-bool check_unique(int data[9][9]){
+bool Sudoku::check_unique(int data[9][9]){
     //判断是否存在连续三行为空
     int continuous_row_empty_cnt = 0;
     for(int i=0;i<9;i++){
@@ -285,10 +280,16 @@ bool Sudoku::gen_Sudoku_with_n_empty(int n, bool is_unique){
 
 }
 
+int Sudoku::sub(int a, int b) {
+    return 0;
+}
+
+
+#ifndef TEST_SUDOKU
 int main(){
-    //    Sudoku s;
-//    s.generateSudoku();
-//    s.printSudoku();
+        Sudoku s;
+    s.generateSudoku();
+    s.printSudoku();
 //    s.gen_Sudoku_with_n_empty(28, true);
 //    s.printSudoku();
 
@@ -296,8 +297,9 @@ int main(){
 //        cout<<"Argument "<<i<<" is "<<argv[i]<<endl;
 //    return 0;
 
-    const char *optstring = "c:s:n:m:r:u"; // 设置短参数类型及是否需要参数
-    int opt;
+//    const char *optstring = "c:s:n:m:r:u"; // 设置短参数类型及是否需要参数
+//    int opt;
+
 //    while ((opt = getopt(argc, argv, optstring)) != -1) {
 //        printf("opt = %c\n", opt);  // 命令参数，亦即 -a -b -c -d
 //        printf("optarg = %s\n", optarg); // 参数内容
@@ -306,15 +308,24 @@ int main(){
 //    }
 
     // 循环读取命令行的参数和参数内容
-    while((opt = getopt(argc, argv, optstring)) != -1){
-        // 如果参数为-c 5，则生成5个终局
-        if(opt == 'c'){
-            int cur_arg = std::atoi(optarg);
-            for(int i=0;i<cur_arg;i++){
-                Sudoku s;
-                s.generateSudoku();
-                s.printSudoku();
-            }
-        }
-    }
+//    while((opt = getopt(argc, argv, optstring)) != -1){
+//        // 如果参数为-c 5，则生成5个终局
+//        if(opt == 'c'){
+//            int cur_arg = std::atoi(optarg);
+//            for(int i=0;i<cur_arg;i++){
+//                Sudoku s;
+//                s.generateSudoku();
+//                s.printSudoku();
+//            }
+//        }
+//    }
 }
+#endif
+
+#ifdef TEST_SUDOKU
+
+int main(int argc,char **argv){
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
+#endif
