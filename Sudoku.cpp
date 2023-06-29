@@ -284,6 +284,13 @@ int Sudoku::sub(int a, int b) {
     return 0;
 }
 
+void Sudoku::solveSudoku() {
+    Solution s;
+    vector<vector<char>> complete_data = trans_data_2_char();
+    s.solveSudoku(complete_data);
+    fillData(complete_data);
+}
+
 
 #ifndef TEST_SUDOKU
 int main(){

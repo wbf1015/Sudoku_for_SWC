@@ -50,4 +50,12 @@ public:
     int (*get_data())[9]{
         return data;
     }
+    void make_data_copy(int (&copy)[9][9]){
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                copy[i][j] = data[i][j];
+            }
+        }
+    }
+    void solveSudoku();
 };

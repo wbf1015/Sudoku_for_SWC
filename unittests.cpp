@@ -55,6 +55,44 @@ TEST(checkMatrix,testInvaliSudoku){
     EXPECT_TRUE(s.checkMatrix('i'));
 }
 
+TEST(checkMatrix,testInvaliSudoku2){
+    Sudoku s;
+    s.generateSudoku();
+    int row_1 = 0;
+    int col_1 = 0;
+    int row_2 = 9;
+    int col_2 = 0;
+    s.set_pos(row_2,col_2,s.get_pos(row_1,col_1));
+    EXPECT_FALSE(s.checkMatrix('a'));
+    EXPECT_TRUE(s.checkMatrix('b'));
+    EXPECT_TRUE(s.checkMatrix('c'));
+    EXPECT_TRUE(s.checkMatrix('d'));
+    EXPECT_TRUE(s.checkMatrix('e'));
+    EXPECT_TRUE(s.checkMatrix('f'));
+    EXPECT_TRUE(s.checkMatrix('g'));
+    EXPECT_TRUE(s.checkMatrix('h'));
+    EXPECT_TRUE(s.checkMatrix('i'));
+}
+
+TEST(checkMatrix,testInvaliSudoku3){
+    Sudoku s;
+    s.generateSudoku();
+    int row_1 = 0;
+    int col_1 = 0;
+    int row_2 = 0;
+    int col_2 = 8;
+    s.set_pos(row_2,col_2,s.get_pos(row_1,col_1));
+    EXPECT_FALSE(s.checkMatrix('a'));
+    EXPECT_TRUE(s.checkMatrix('b'));
+    EXPECT_TRUE(s.checkMatrix('c'));
+    EXPECT_TRUE(s.checkMatrix('d'));
+    EXPECT_TRUE(s.checkMatrix('e'));
+    EXPECT_TRUE(s.checkMatrix('f'));
+    EXPECT_TRUE(s.checkMatrix('g'));
+    EXPECT_TRUE(s.checkMatrix('h'));
+    EXPECT_TRUE(s.checkMatrix('i'));
+}
+
 
 TEST(checkMatrix,testValiSudoku){
     vector<vector<int>> valid_sudoku = {
@@ -124,5 +162,19 @@ TEST(gen_Sudoku_with_n_empty,testCheckNotUnique_3emptyCols){
         }
     }
     EXPECT_FALSE(s.check_unique(s.get_data()));
+}
+
+TEST(solveSudoku, null){
+    Sudoku s;
+    s.generateSudoku();
+    int data_copy[9][9];
+    s.make_data_copy(data_copy);
+    s.gen_Sudoku_with_n_empty(20, true);
+    s.solveSudoku();
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            EXPECT_EQ(data_copy[i][j],s.get_data()[i][j]);
+        }
+    }
 }
 
