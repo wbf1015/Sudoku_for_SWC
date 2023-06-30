@@ -140,8 +140,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="getopt.cpp" />
-    <ClCompile Include="Solution.cpp" />
-    <ClCompile Include="Sudoku.cpp" />
+    <ClCompile Include="solution.cpp" />
+    <ClCompile Include="sudoku.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="getopt.h" />

@@ -7,30 +7,30 @@
 #include <windows.h>
 #include<iomanip>
 #include"getopt.h"
-#include "Solution.cpp"
+#include "solution.cpp"
 using namespace std;
 // 数独类，用这个类来模拟一个数独游戏
 class Sudoku {
 private:
     int data[9][9] = { 0 };
 public:
-    bool generateSudoku();
-    bool checkMatrix(char m);
-    bool checkMatrixUtil(int row_start, int row_end, int col_start, int col_end);
-    bool checkRow(int r);
-    vector<vector<char>> trans_data_2_char();
-    void fillData(vector<vector<char>> data_char);
-    bool checkCol(int c);
-    void printSudoku();
-    bool gen_Sudoku_with_n_empty(int n, bool is_unique);
-    void clearData();
-    void Solvesudoku();
-    void insertData(int row,int col,int data);
-    void print2txt();
+    bool GenerateSudoku();
+    bool CheckMatrix(char m);
+    bool CheckMatrixUtil(int row_start, int row_end, int col_start, int col_end);
+    bool CheckRow(int r);
+    vector<vector<char>> TransData2Char();
+    void FillData(vector<vector<char>> data_char);
+    bool CheckCol(int c);
+    void PrintSudoku();
+    bool GenSudokuWithNEmpty(int n, bool is_unique);
+    void ClearData();
+    void SolveSudoku();
+    void InsertData(int row,int col,int data);
+    void Print2TXT(string path);
 };
 
 // 传入一个9*9二维字符向量，将它解析为一个数独
-void Sudoku::fillData(vector<vector<char>> data_char) {
+void Sudoku::FillData(vector<vector<char>> data_char) {
     for (unsigned int i = 0; i < data_char.size(); i++) {
         for (unsigned int j = 0; j < data_char[i].size(); j++) {
             data[i][j] = int(data_char[i][j] - int('0'));
@@ -39,7 +39,7 @@ void Sudoku::fillData(vector<vector<char>> data_char) {
 }
 
 // 将数独类自己保存的数据转换为一个二维字符向量
-vector<vector<char>> Sudoku::trans_data_2_char() {
+vector<vector<char>> Sudoku::TransData2Char() {
     vector<vector<char>> data_char;
     for (int i = 0; i <= 8; i++) {
         vector<char> row;
@@ -59,14 +59,14 @@ vector<vector<char>> Sudoku::trans_data_2_char() {
 
 
 // 打印数独
-void Sudoku::printSudoku() {
+void Sudoku::PrintSudoku() {
     cout << "+-------+-------+-------+" << endl;
     for (int i = 0; i < 9; i++) {
         cout << "| ";
         for (int j = 0; j < 9; j++) {
             // 如果是待填写字符的话用X代替
             if (data[i][j] == 0) {
-                cout << " " << " ";
+                cout << "$" << " ";
             }
             else {
                 cout << data[i][j] << " ";
@@ -81,7 +81,7 @@ void Sudoku::printSudoku() {
 }
 
 // 检查一个3*3的小单元格是否正确
-bool Sudoku::checkMatrixUtil(int row_start, int row_end, int col_start, int col_end) {
+bool Sudoku::CheckMatrixUtil(int row_start, int row_end, int col_start, int col_end) {
     set<int> record;
     for (int i = row_start; i <= row_end; i++) {
         for (int j = col_start; j <= col_end; j++) {
@@ -98,33 +98,33 @@ bool Sudoku::checkMatrixUtil(int row_start, int row_end, int col_start, int col_
 }
 
 //检查数独中所有的3*3的小单元格是否正确
-bool Sudoku::checkMatrix(char m) {
+bool Sudoku::CheckMatrix(char m) {
     switch (m) {
     case 'a':
-        return checkMatrixUtil(0, 2, 0, 2);
+        return CheckMatrixUtil(0, 2, 0, 2);
     case 'b':
-        return checkMatrixUtil(0, 2, 3, 5);
+        return CheckMatrixUtil(0, 2, 3, 5);
     case 'c':
-        return checkMatrixUtil(0, 2, 6, 8);
+        return CheckMatrixUtil(0, 2, 6, 8);
     case 'd':
-        return checkMatrixUtil(3, 5, 0, 2);
+        return CheckMatrixUtil(3, 5, 0, 2);
     case 'e':
-        return checkMatrixUtil(3, 5, 3, 5);
+        return CheckMatrixUtil(3, 5, 3, 5);
     case 'f':
-        return checkMatrixUtil(3, 5, 6, 8);
+        return CheckMatrixUtil(3, 5, 6, 8);
     case 'g':
-        return checkMatrixUtil(6, 8, 0, 2);
+        return CheckMatrixUtil(6, 8, 0, 2);
     case 'h':
-        return checkMatrixUtil(6, 8, 3, 5);
+        return CheckMatrixUtil(6, 8, 3, 5);
     case 'i':
-        return checkMatrixUtil(6, 8, 6, 8);
+        return CheckMatrixUtil(6, 8, 6, 8);
     default:
-        throw "ERROR AT CHECKMATRIX";
+        throw "ERROR AT CheckMatrix";
     }
 }
 
 //检查某一行是否正确
-bool Sudoku::checkCol(int c) {
+bool Sudoku::CheckCol(int c) {
     set<int> record;
     for (int i = 0; i <= 8; i++) {
         if (data[i][c] == 0) continue;
@@ -137,7 +137,7 @@ bool Sudoku::checkCol(int c) {
 }
 
 //检查某一列是否正确
-bool Sudoku::checkRow(int r) {
+bool Sudoku::CheckRow(int r) {
     set<int> record;
     for (int i = 0; i <= 8; i++) {
         if (data[r][i] == 0) continue;
@@ -150,7 +150,7 @@ bool Sudoku::checkRow(int r) {
 }
 
 //生成一个数独
-bool Sudoku::generateSudoku() {
+bool Sudoku::GenerateSudoku() {
     srand((unsigned)time(NULL));
     int candidate[9] = { 1,2,3,4,5,6,7,8,9 };
     int matrix_a[9];
@@ -165,7 +165,7 @@ bool Sudoku::generateSudoku() {
     }
     index = 0;
     bool first_in = true;
-    while (first_in | (!checkCol(3) | !checkCol(4) | !checkCol(5) | !checkCol(6) | !checkCol(7) | !checkCol(8) | !checkMatrix('b') | !checkMatrix('c'))) {
+    while (first_in | (!CheckCol(3) | !CheckCol(4) | !CheckCol(5) | !CheckCol(6) | !CheckCol(7) | !CheckCol(8) | !CheckMatrix('b') | !CheckMatrix('c'))) {
         first_in = false;
         for (int i = 0; i <= 2; i++) {
             int candidate_bc[6];
@@ -187,9 +187,9 @@ bool Sudoku::generateSudoku() {
     }
 
     Solution s;
-    vector<vector<char>> complete_data = trans_data_2_char();
+    vector<vector<char>> complete_data = TransData2Char();
     s.solveSudoku(complete_data);
-    fillData(complete_data);
+    FillData(complete_data);
     return true;
 }
 
@@ -281,7 +281,7 @@ bool check_unique(int data[9][9]) {
 
 // 对一个完整的数独进行随机挖空，挖空个数为n，is_unique代表是否要求唯一解
 // 调用此函数前需保证数独类中已经生成了完整的数独数据
-bool Sudoku::gen_Sudoku_with_n_empty(int n, bool is_unique) {
+bool Sudoku::GenSudokuWithNEmpty(int n, bool is_unique) {
     int known_num = 81 - n;
     if (is_unique && (known_num < 17)) {
         cout << "wrong input, n too large!" << endl;
@@ -307,7 +307,7 @@ bool Sudoku::gen_Sudoku_with_n_empty(int n, bool is_unique) {
 }
 
 // 将自己保存的数独数据清空
-void Sudoku::clearData() {
+void Sudoku::ClearData() {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             this->data[i][j] = 0;
@@ -316,15 +316,15 @@ void Sudoku::clearData() {
 }
 
 //求解数独
-void Sudoku::Solvesudoku() {
+void Sudoku::SolveSudoku() {
     Solution s;
-    vector<vector<char>> complete_data = trans_data_2_char();
+    vector<vector<char>> complete_data = TransData2Char();
     s.solveSudoku(complete_data);
-    fillData(complete_data);
+    FillData(complete_data);
 }
 
 //向指定位置插入值
-void Sudoku::insertData(int row,int col,int data) {
+void Sudoku::InsertData(int row,int col,int data) {
     if ((row < 0) | (row>8) | (col < 0) | (col>8) | (data < 0) | (data>9)) {
         cout << "向数独指定位置插入数值失败"<<endl;
         return;
@@ -333,11 +333,11 @@ void Sudoku::insertData(int row,int col,int data) {
     return;
 }
 
-void Sudoku::print2txt() {
-    string filename = "sudoku.txt";
+void Sudoku::Print2TXT(string path) {
+    string filename = path;
     std::ofstream ofs(filename, std::ios::app);
     if (!ofs) {
-        cout << "无法打开文件：" << filename << std::endl;
+        cout << "无法打开文件：" << filename << endl;
         return;
     }
 
@@ -358,7 +358,7 @@ void Sudoku::print2txt() {
         for (int j = 0; j < 9; j++) {
             // 如果是待填写字符的话用X代替
             if (data[i][j] == 0) {
-                ofs << " " << " ";
+                ofs << "$" << " ";
             }
             else {
                 ofs << data[i][j] << " ";
@@ -375,7 +375,7 @@ void Sudoku::print2txt() {
 }
 
 // 从txt中读取若干个数独并给出解答，将解答生成到sudoku.txt中
-void solve_txt_sudoku(string path) {
+void SolveTXTSudoku(string path) {
     // 这里给出的逻辑是：如果接收到字符X、0、.则认为接收到一个待填充的位置
     // 如果接收到1-9的任意一个字符则认为接收到一个待填充的位置
     ifstream infile(path, ios::in);
@@ -389,33 +389,33 @@ void solve_txt_sudoku(string path) {
     Sudoku su;
     while (infile >> s) {
         for (unsigned int i = 0; i < s.size(); i++) {
-            if ((s[i] == 'X') | (s[i] == 'x') | (s[i] == '0') | (s[i] == '.')) {
-                su.insertData(index_row, index_col++, 0);
+            if (s[i]=='$') {
+                su.InsertData(index_row, index_col++, 0);
                 if (index_col == 9) {
                     index_row += 1;
                     index_col = 0;
                     if (index_row == 9) {
-                        su.Solvesudoku();
-                        su.print2txt();
-                        cout << "======成功求解第" << count++ << "个数独======" << endl;
-                        su.printSudoku();
-                        su.clearData();
+                        su.SolveSudoku();
+                        su.Print2TXT("sudoku.txt");
+                        cout << "======成功求解第" << ++count << "个数独======" << endl;
+                        su.PrintSudoku();
+                        su.ClearData();
                         index_row = 0; index_col = 0;
                     }
                 }
                 continue;
             }
             if (s[i] >= '1' && s[i] <= '9') {
-                su.insertData(index_row, index_col++, s[i]-'0');
+                su.InsertData(index_row, index_col++, s[i]-'0');
                 if (index_col == 9) {
                     index_row += 1;
                     index_col = 0;
                     if (index_row == 9) {
-                        su.Solvesudoku();
-                        su.print2txt();
-                        cout << "======成功求解第" << count++ << "个数独======" << endl;
-                        su.printSudoku();
-                        su.clearData();
+                        su.SolveSudoku();
+                        su.Print2TXT("sudoku.txt");
+                        cout << "======成功求解第" << ++count << "个数独======" << endl;
+                        su.PrintSudoku();
+                        su.ClearData();
                         index_row = 0; index_col = 0;
                     }
                 }
@@ -425,7 +425,7 @@ void solve_txt_sudoku(string path) {
     }
     infile.close();
 }
-void extractNumbers(const std::string& str, int& num1, int& num2) {
+void ExtractNumbers(const std::string& str, int& num1, int& num2) {
     std::stringstream ss(str); // 将字符串作为输入流
     char dash; // 用于接收中间的破折号
     ss >> num1 >> dash >> num2; // 提取两个整数
@@ -441,11 +441,16 @@ int main(int argc, char* argv[]) {
         switch (opt) {
         case 'c': {
             int cur_arg = std::atoi(optarg);
+            if ((cur_arg <= 0)||(cur_arg>1000000)) {
+                cout << "非法的参数" << endl;
+                return -1;
+            }
             for (int i = 0; i < cur_arg; i++) {
                 Sudoku s;
-                s.generateSudoku();
+                s.GenerateSudoku();
                 cout << "======成功生成第" << i+1 << "个数独======" << endl;
-                s.printSudoku();
+                s.PrintSudoku();
+                s.Print2TXT("endGame.txt");
                 cout << endl;
                 Sleep(1000);
             }
@@ -453,7 +458,7 @@ int main(int argc, char* argv[]) {
         }
         case 's': {
             string s_path = std::string(optarg);
-            solve_txt_sudoku(s_path);
+            SolveTXTSudoku(s_path);
             //cout << "here" << endl;
             break;
         }
@@ -470,41 +475,53 @@ int main(int argc, char* argv[]) {
             }
             extra_para = true;
             int m_arg = std::atoi(optarg);
-            cout << m_arg << endl;
+            //cout << m_arg << endl;
             switch (m_arg)
             {
             case 1: {
                 //生成简单的数独游戏
+                if ((para_n <= 0) || (para_n>10000)) {
+                    cout << "非法的参数" << endl;
+                    return -1;
+                }
                 for (int i = 0; i < para_n; i++) {
                     Sudoku s;
-                    s.generateSudoku();
-                    s.gen_Sudoku_with_n_empty(10, false);
+                    s.GenerateSudoku();
+                    s.GenSudokuWithNEmpty(10, false);
                     cout << "======成功生成第" << i+1 << "个简单难度数独======" << endl;
-                    s.printSudoku();
+                    s.PrintSudoku();
                     Sleep(1000);
                 }
                 break;
             }
             case 2: {
                 //生成普通的数独游戏
+                if ((para_n <= 0) || (para_n > 10000)) {
+                    cout << "非法的参数" << endl;
+                    return -1;
+                }
                 for (int i = 0; i < para_n; i++) {
                     Sudoku s;
-                    s.generateSudoku();
-                    s.gen_Sudoku_with_n_empty(20, false);
+                    s.GenerateSudoku();
+                    s.GenSudokuWithNEmpty(20, false);
                     cout << "======成功生成第" << i+1 << "个普通难度数独======" << endl;
-                    s.printSudoku();
+                    s.PrintSudoku();
                     Sleep(1000);
                 }
                 break;
             }
             case 3: {
                 //生成困难的数独游戏
+                if ((para_n <= 0) || (para_n > 10000)) {
+                    cout << "非法的参数" << endl;
+                    return -1;
+                }
                 for (int i = 0; i < para_n; i++) {
                     Sudoku s;
-                    s.generateSudoku();
-                    s.gen_Sudoku_with_n_empty(40, false);
+                    s.GenerateSudoku();
+                    s.GenSudokuWithNEmpty(40, false);
                     cout << "======成功生成第" << i + 1 << "个困难难度数独======" << endl;
-                    s.printSudoku();
+                    s.PrintSudoku();
                     Sleep(1000);
                 }
                 break;
@@ -525,14 +542,26 @@ int main(int argc, char* argv[]) {
             // 获取参数-r的值
             string r_arg = std::string(optarg);
             int l_limit, h_limit;
-            extractNumbers(r_arg, l_limit, h_limit);
+            ExtractNumbers(r_arg, l_limit, h_limit);
+            if (l_limit < 20) {
+                cout << "非法的下界，下界已更新为20" << endl;
+                l_limit = 20;
+            }
+            if (h_limit > 55) {
+                cout << "超过程序所允许的上限，上限已经调整为55" << endl;
+                h_limit = 55;
+            }
+            if ((para_n <= 0) || (para_n > 10000)) {
+                cout << "非法的参数" << endl;
+                return -1;
+            }
             for (int i = 0; i < para_n; i++) {
                 Sudoku s;
-                s.generateSudoku();
+                s.GenerateSudoku();
                 int emptyNum = rand() % (h_limit - l_limit + 1) + l_limit;
                 cout << "======成功生成第" << i + 1 << "个数独，挖空数为"<<emptyNum<<"======" << endl;
-                s.gen_Sudoku_with_n_empty(emptyNum, false);
-                s.printSudoku();
+                s.GenSudokuWithNEmpty(emptyNum, false);
+                s.PrintSudoku();
                 Sleep(1000);
             }
             break;
@@ -544,13 +573,16 @@ int main(int argc, char* argv[]) {
                 return 1;
             }
             extra_para = true;
-            // 任务6代码
+            if ((para_n <= 0) || (para_n > 10000)) {
+                cout << "非法的参数" << endl;
+                return -1;
+            }
             for (int i = 0; i < para_n; i++) {
                 Sudoku s;
-                s.generateSudoku();
-                s.gen_Sudoku_with_n_empty(20, true);
+                s.GenerateSudoku();
+                s.GenSudokuWithNEmpty(20, true);
                 cout << "======成功生成第" << i + 1 << "个具有唯一解的数独======" << endl;
-                s.printSudoku();
+                s.PrintSudoku();
                 Sleep(1000);
             }
             break;
@@ -558,16 +590,20 @@ int main(int argc, char* argv[]) {
         default:
             // 处理未知选项
             std::cerr << "错误：未知选项" << std::endl;
-            return 1;
+            return -1;
         }
     }
     if (found_n & !extra_para) {
+        if ((para_n <= 0) || (para_n > 10000)) {
+            cout << "非法的参数" << endl;
+            return -1;
+        }
         for (int i = 0; i < para_n; i++) {
             Sudoku s;
-            s.generateSudoku();
-            s.gen_Sudoku_with_n_empty(20, false);
+            s.GenerateSudoku();
+            s.GenSudokuWithNEmpty(20, false);
             cout << "======成功生成第" << i + 1 << "个数独======" << endl;
-            s.printSudoku();
+            s.PrintSudoku();
             Sleep(1000);
         }
     }

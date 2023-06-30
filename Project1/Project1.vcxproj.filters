@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Solution.cpp">
+    <ClCompile Include="solution.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Sudoku.cpp">
+    <ClCompile Include="sudoku.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="getopt.cpp">
